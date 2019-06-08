@@ -1,0 +1,251 @@
+﻿@model Booktest.Models.BOOK_DATA
+
+@{
+    ViewBag.Title = "圖書維護系統";
+}
+    <head>
+        <style>
+          
+
+            h1 {
+                color:#3853B8;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+
+<h1><b>圖書維護系統</b></h1>
+<div id="window" style="display:none">
+    <form id="serch_window">
+        書名：<input id="BOOK_NAME" style="width: 80%;"><br><br>
+        圖書類別：<input id="BOOK_CLASS_NAME" style="width: 80%;"><br><br>
+        借閱狀態：<input id="CODE_NAME" style="width: 80%;"><br><br>
+        借閱人：<input id="BOOK_KEEPER" style="width: 80%;"><br><br>
+        <button type="button" class="k-button k-success-colored btn-add-book" id="save_book">查詢</button>
+        <button type="button" class="k-button  k-error-colored btn-add-book" id="ClearDropDown">清除</button>
+    </form>
+    <form id="inser_window">
+        書名：<input id="BOOK_NAME1" class="k-textbox" required style="width: 220px;" /><br><br>
+        作者：<input id="BOOK_AUTHOR1" class="k-textbox" required style="width: 220px;" /><br><br>
+        出版社：<input id="BOOK_PUBLISHER1" class="k-textbox" required style="width: 220px;" /><br><br>
+        內容簡介：<input id="BOOK_NOTE1" class="k-textbox" required style="width: 220px;" /><br><br>
+        購買日期：<input id="BOOK_BOUGHT_DATE1" class="k-textbox" required style="width: 220px;" /><br><br>
+        書籍分類：<input id="BOOK_CLASS_ID1" class="k-textbox" required style="width: 220px;" /><br><br>
+        <button type="button" class="k-button k-primary btn-add-book" id="inser_btn">新增</button>
+    </form>
+</div>
+<span id="serch" class="k-button hide-on-narrow  k-success-colored">查詢書籍</span>
+<span id="insert" class="k-button hide-on-narrow k-info-colored">新增書籍</span><br><br>
+<div id="book_grid"></div>
+
+<!--資料撈出來 隱藏 <li>部分勿用enter分行-->
+<div style="display:none">
+    <ul id="list">
+        @{var num=1;}
+        @foreach (var item in (List<Booktest.Models.BOOK_DATA>)ViewBag.SearchResult)
+        {
+        <li id="@num">@item.BOOK_NAME|@item.BOOK_BOUGHT_DATE|@item.BOOK_CLASS_ID|@item.BOOK_STATUS|@item.BOOK_PUBLISHER|@item.BOOK_NOTE|@item.BOOK_CLASS_NAME|@item.CODE_ID|@item.CODE_NAME|@item.BOOK_ID|@item.BOOK_KEEPER</li>
+            num += 1;
+        }
+    </ul>
+</div>
+<script>
+    var book = [{ "Id": 0, "Name": "" }], book1 = [];
+    var myWindow = $("#window"), book_grid = $("#book_grid");
+    for (i = 1; i <= $("#list>li").length; i++) {
+        s = document.getElementById(i).innerHTML.split("|");
+        if (s[10] == "0001") s[10] = "張三"; if (s[10] == "0002") s[10] = "李四"; if (s[10] == "0003") s[10] = "王五";
+        if (s[10] == "0004") s[10] = "陳六"; if (s[10] == "0005") s[10] = "劉七"; if (s[10] == "0006") s[10] = "許八";
+        if (s[0] != "") {
+            book.push({ "Id": s[9], "Name": s[0], "day": s[1], "class": s[6], "status": s[8] ,"user": s[10]});
+            book1.push({ "Id": s[9], "Name": s[0], "day": s[1], "class": s[6], "status": s[8] ,"user": s[10]});
+        }
+    }
+     //OPEN_grid介面
+     Grid(book1);
+
+     //新增
+    $("#inser_btn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/home/inser",
+            data: "id=" + $("#BOOK_NAME1").val() + "|"
+                        + $("#BOOK_AUTHOR1").val() + "|"
+                        + $("#BOOK_PUBLISHER1").val() + "|"
+                        + $("#BOOK_NOTE1").val() + "|"
+                        + $("#BOOK_BOUGHT_DATE1").val() + "|"
+                        + $("#BOOK_CLASS_ID1").val(),
+            dataType: "json",
+            success: function (response) {
+                alert("新增成功")
+            }
+        });
+    })
+    //
+    $("#insert").click(function () {
+        $("#serch_window").hide(); $("#inser_window").show(); $("#update_window").hide();
+        myWindow.data("kendoWindow").center().open();
+    });
+
+
+     //OpenSearch介面
+      $("#serch").click(function () {
+          $("#serch_window").show(); $("#inser_window").hide(); $("#update_window").hide();
+          myWindow.data("kendoWindow").center().open();
+      });
+
+    //查詢介面
+    $("#window").kendoWindow({
+        width: "600px",
+        title: "查詢書籍",
+        visible: false,
+    });
+
+
+    //書名
+    $("#BOOK_NAME").kendoDropDownList({
+        filter: "startswith",
+        dataTextField: "Name",
+        dataValueField: "Name",
+        noDataTemplate: "沒有找到相關數據!",
+        dataSource: book
+    });
+
+   //購買日期
+          $("#BOOK_BOUGHT_DATE1").kendoDatePicker({
+            parseFormats: ["yyyyMMdd", "yyyy/MM/dd", "yyyy-MM-dd"],
+            value: new Date(),
+            min: new Date(),
+            format: "yyyy-MM-dd"
+        });
+    //圖書類別名稱
+    $("#BOOK_CLASS_NAME").kendoDropDownList({
+        dataTextField: "Name",
+        dataValueField: "Name",
+        dataSource: [{  Name: "" },
+        { Id: "1", Name: "Banking" }, { Id: "2", Name: "Database" },
+        { Id: "3", Name: "Dataware House" }, { Id: "4", Name: "EIS" },
+        { Id: "5", Name: "Internet" }, { Id: "6", Name: "Languages" },
+        { Id: "7", Name: "Laws And Rules" }, { Id: "8", Name: "Management" },
+        { Id: "9", Name: "Marketing" }, { Id: "10", Name: "Networking" },
+        { Id: "11", Name: "Operating System" }, { Id: "12", Name: "Security" },
+        { Id: "13", Name: "Software Engineering" }, { Id: "14", Name: "System Integration" },
+        { Id: "15", Name: "應用系統整合" }, { Id: "16", Name: "Others" },
+        { Id: "17", Name: "大陸相關書籍" }, { Id: "18", Name: "內部訓練課程光碟" },
+        { Id: "19", Name: "研討會/產品介紹光碟" }, { Id: "20", Name: "Menu 操作手冊" },
+        { Id: "21", Name: "公司內部各項活動光碟" }, { Id: "22", Name: "家庭保健" },
+        { Id: "23", Name: "休閒旅遊" }, { Id: "24", Name: "客戶案例分享" }
+        ]
+    });
+    //書籍分類
+     $("#BOOK_CLASS_ID1").kendoDropDownList({
+        dataTextField: "Name",
+        dataValueField: "Id",
+        dataSource: [{  Name: "" },
+        { Id: "BK", Name: "Banking" }, { Id: "DB", Name: "Database" },
+        { Id: "DH", Name: "Dataware House" }, { Id: "EIS", Name: "EIS" },
+        { Id: "IN", Name: "Internet" }, { Id: "LG", Name: "Languages" },
+        { Id: "LR", Name: "Laws And Rules" }, { Id: "MG", Name: "Management" },
+        { Id: "MK", Name: "Marketing" }, { Id: "NW", Name: "Networking" },
+        { Id: "OS", Name: "Operating System" }, { Id: "SC", Name: "Security" },
+        { Id: "SE", Name: "Software Engineering" }, { Id: "SI", Name: "System Integration" },
+        { Id: "EAI", Name: "應用系統整合" }, { Id: "OT", Name: "Others" },
+        { Id: "CHA", Name: "大陸相關書籍" }, { Id: "TRCD", Name: "內部訓練課程光碟" },
+        { Id: "SECD", Name: "研討會/產品介紹光碟" }, { Id: "MENU", Name: "Menu 操作手冊" },
+        { Id: "ATCD", Name: "公司內部各項活動光碟" }, { Id: "FM", Name: "家庭保健" },
+        { Id: "TP", Name: "休閒旅遊" }, { Id: "CCS", Name: "客戶案例分享" }
+        ]
+    });
+
+    //借閱狀態
+    $("#CODE_NAME").kendoDropDownList({
+        dataTextField: "Name",
+        dataValueField: "Name",
+        dataSource: [{ Name: "" },
+        { Id: "1", Name: "可以借出" }, { Id: "2", Name: "已借出" },
+        { Id: "3", Name: "不可借出" }, { Id: "4", Name: "已借出(未領)" },
+        ]
+    });
+    //借閱人  書籍保管人(?
+        $("#BOOK_KEEPER").kendoDropDownList({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                dataSource: [{ Id: "", Name: "" }, { Id: "0001", Name: "張三" }, { Id: "0002", Name: "李四" },
+                { Id: "0003", Name: "王五" }, { Id: "0004", Name: "陳六" },
+                { Id: "0005", Name: "劉七" }, { Id: "0006", Name: "許八" }]  
+        });
+
+    //查詢結果
+$("#save_book").click(function () {
+    var serch = [];
+    for (i = 1; i <= $("#list>li").length; i++) {
+        s = document.getElementById(i).innerHTML.split("|");
+      if ((s[0] == $("#BOOK_NAME").val() || $("#BOOK_NAME").val() == "") &&
+            (s[6] == $("#BOOK_CLASS_NAME").val() || $("#BOOK_CLASS_NAME").val() == "") &&
+            (s[8] == $("#CODE_NAME").val() || $("#CODE_NAME").val() == "") &&
+            (s[10] == $("#BOOK_KEEPER").val() || $("#BOOK_KEEPER").val() == ""))
+            serch.push({ "Id": s[9], "Name": s[0], "day": s[1], "class": s[6], "status": s[8], "user": s[10] });
+            
+       
+    }
+    console.log(serch);
+    Grid(serch);
+    myWindow.data("kendoWindow").close();
+});
+    //kendoGrid
+    function Grid(data) {
+        book_grid.kendoGrid({
+            dataSource: {//資料來源
+                type: "odata",
+                data: data,
+                pageSize: 9,
+            },
+            height: 550,
+            toolbar: "圖書分類",
+            pageable: {//分頁選單
+                input: true,
+                numeric: false
+            },
+            columns: [
+                { field: "Id", title: "書籍編號", },
+                { field: "class", title: "書籍類別", },
+                { field: "Name", title: "書籍名稱", },
+                { field: "day", title: "購書日期", },
+                { field: "status", title: "借閱狀態", },
+                 { field: "user", title: "借閱人", },
+                {
+                    command: [//刪除&修改按紐
+                        {
+                            name: "刪除", click: function (e) {
+                                e.preventDefault();
+                                var target = $(e.target).closest("tr");
+                                var data1 = this.dataItem(target);
+                                kendo.confirm("確定刪除「" + data1.Name + "」嗎?").then(function () {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Home/Delete",
+                                        data: "Book_Id=" + data1.Id,
+                                        dataType: "json",
+                                        success: function (response) {
+                                            alert(JSON.stringify(response));
+                                        }, error: function (error) {
+                                            alert(JSON.stringify(error));
+                                        }
+                                    });
+                                 
+                                }, function () {
+                                });
+                            }
+                        },
+                        {
+                            name: "修改", click: function (e) { }
+                        }
+                    ]
+                }
+            ],
+            editable: true
+
+        });
+    }
+</script>

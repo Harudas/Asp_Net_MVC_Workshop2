@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GSSWEBModelStoreContainer" CdmEntityContainer="GSSWEBEntities">
+    <EntitySetMapping Name="BOOK_CLASS">
+      <EntityTypeMapping TypeName="GSSWEBModel.BOOK_CLASS">
+        <MappingFragment StoreEntitySet="BOOK_CLASS">
+          <ScalarProperty Name="BOOK_CLASS_ID" ColumnName="BOOK_CLASS_ID" />
+          <ScalarProperty Name="BOOK_CLASS_NAME" ColumnName="BOOK_CLASS_NAME" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+          <ScalarProperty Name="MODIFY_USER" ColumnName="MODIFY_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOK_DATA">
+      <EntityTypeMapping TypeName="GSSWEBModel.BOOK_DATA">
+        <MappingFragment StoreEntitySet="BOOK_DATA">
+          <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+          <ScalarProperty Name="BOOK_NAME" ColumnName="BOOK_NAME" />
+          <ScalarProperty Name="BOOK_CLASS_ID" ColumnName="BOOK_CLASS_ID" />
+          <ScalarProperty Name="BOOK_AUTHOR" ColumnName="BOOK_AUTHOR" />
+          <ScalarProperty Name="BOOK_BOUGHT_DATE" ColumnName="BOOK_BOUGHT_DATE" />
+          <ScalarProperty Name="BOOK_PUBLISHER" ColumnName="BOOK_PUBLISHER" />
+          <ScalarProperty Name="BOOK_NOTE" ColumnName="BOOK_NOTE" />
+          <ScalarProperty Name="BOOK_STATUS" ColumnName="BOOK_STATUS" />
+          <ScalarProperty Name="BOOK_KEEPER" ColumnName="BOOK_KEEPER" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+          <ScalarProperty Name="MODIFY_USER" ColumnName="MODIFY_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MEMBER_M">
+      <EntityTypeMapping TypeName="GSSWEBModel.MEMBER_M">
+        <MappingFragment StoreEntitySet="MEMBER_M">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="USER_CNAME" ColumnName="USER_CNAME" />
+          <ScalarProperty Name="USER_ENAME" ColumnName="USER_ENAME" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+          <ScalarProperty Name="MODIFY_USER" ColumnName="MODIFY_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOK_CODE">
+      <EntityTypeMapping TypeName="GSSWEBModel.BOOK_CODE">
+        <MappingFragment StoreEntitySet="BOOK_CODE">
+          <ScalarProperty Name="CODE_TYPE" ColumnName="CODE_TYPE" />
+          <ScalarProperty Name="CODE_ID" ColumnName="CODE_ID" />
+          <ScalarProperty Name="CODE_TYPE_DESC" ColumnName="CODE_TYPE_DESC" />
+          <ScalarProperty Name="CODE_NAME" ColumnName="CODE_NAME" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+          <ScalarProperty Name="MODIFY_USER" ColumnName="MODIFY_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asp_Net_MVC_Workshop2", "Booktest\Asp_Net_MVC_Workshop2.csproj", "{DB196E1C-0E0E-4759-A770-2722B2D73ADC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB196E1C-0E0E-4759-A770-2722B2D73ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB196E1C-0E0E-4759-A770-2722B2D73ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB196E1C-0E0E-4759-A770-2722B2D73ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB196E1C-0E0E-4759-A770-2722B2D73ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A665EE2F-6181-40AF-A5C6-960EC28834D0}
+	EndGlobalSection
+EndGlobal

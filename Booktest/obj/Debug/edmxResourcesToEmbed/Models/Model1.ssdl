@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GSSWEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BOOK_CLASS">
+    <Key>
+      <PropertyRef Name="BOOK_CLASS_ID" />
+    </Key>
+    <Property Name="BOOK_CLASS_ID" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="BOOK_CLASS_NAME" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="CREATE_DATE" Type="datetime" />
+    <Property Name="CREATE_USER" Type="nvarchar" MaxLength="12" />
+    <Property Name="MODIFY_DATE" Type="datetime" />
+    <Property Name="MODIFY_USER" Type="nvarchar" MaxLength="12" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'GSSWEB.dbo.BOOK_CODE' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="BOOK_CODE">
+    <Key>
+      <PropertyRef Name="CODE_TYPE" />
+      <PropertyRef Name="CODE_ID" />
+    </Key>
+    <Property Name="CODE_TYPE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CODE_ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CODE_TYPE_DESC" Type="nvarchar" MaxLength="200" />
+    <Property Name="CODE_NAME" Type="nvarchar" MaxLength="200" />
+    <Property Name="CREATE_DATE" Type="datetime" />
+    <Property Name="CREATE_USER" Type="nvarchar" MaxLength="10" />
+    <Property Name="MODIFY_DATE" Type="datetime" />
+    <Property Name="MODIFY_USER" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="BOOK_DATA">
+    <Key>
+      <PropertyRef Name="BOOK_ID" />
+    </Key>
+    <Property Name="BOOK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BOOK_NAME" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="BOOK_CLASS_ID" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="BOOK_AUTHOR" Type="nvarchar" MaxLength="30" />
+    <Property Name="BOOK_BOUGHT_DATE" Type="datetime" />
+    <Property Name="BOOK_PUBLISHER" Type="nvarchar" MaxLength="20" />
+    <Property Name="BOOK_NOTE" Type="nvarchar" MaxLength="1200" />
+    <Property Name="BOOK_STATUS" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="BOOK_KEEPER" Type="nvarchar" MaxLength="12" />
+    <Property Name="CREATE_DATE" Type="datetime" />
+    <Property Name="CREATE_USER" Type="nvarchar" MaxLength="12" />
+    <Property Name="MODIFY_DATE" Type="datetime" />
+    <Property Name="MODIFY_USER" Type="nvarchar" MaxLength="12" />
+  </EntityType>
+  <EntityType Name="MEMBER_M">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="USER_CNAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="USER_ENAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="CREATE_DATE" Type="datetime" />
+    <Property Name="CREATE_USER" Type="nvarchar" MaxLength="12" />
+    <Property Name="MODIFY_DATE" Type="datetime" />
+    <Property Name="MODIFY_USER" Type="nvarchar" MaxLength="12" />
+  </EntityType>
+  <EntityContainer Name="GSSWEBModelStoreContainer">
+    <EntitySet Name="BOOK_CLASS" EntityType="Self.BOOK_CLASS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOK_DATA" EntityType="Self.BOOK_DATA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MEMBER_M" EntityType="Self.MEMBER_M" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOK_CODE" EntityType="Self.BOOK_CODE" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [BOOK_CODE].[CODE_TYPE] AS [CODE_TYPE], 
+    [BOOK_CODE].[CODE_ID] AS [CODE_ID], 
+    [BOOK_CODE].[CODE_TYPE_DESC] AS [CODE_TYPE_DESC], 
+    [BOOK_CODE].[CODE_NAME] AS [CODE_NAME], 
+    [BOOK_CODE].[CREATE_DATE] AS [CREATE_DATE], 
+    [BOOK_CODE].[CREATE_USER] AS [CREATE_USER], 
+    [BOOK_CODE].[MODIFY_DATE] AS [MODIFY_DATE], 
+    [BOOK_CODE].[MODIFY_USER] AS [MODIFY_USER]
+    FROM [dbo].[BOOK_CODE] AS [BOOK_CODE]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
